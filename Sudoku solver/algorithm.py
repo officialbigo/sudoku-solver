@@ -41,10 +41,10 @@ BLACK = (0, 0, 0)
 GRAY = (200, 200, 200)
 RED = (255, 0, 0)
 
-button_x, button_y = 250, 550  # Position of the button
-button_width, button_height = 100, 50  # Size of the button
+button_x, button_y = 250, 550 
+button_width, button_height = 100, 50 
 button_color = BLACK
-button_text = "Solve"  # Text on the button
+button_text = "Solve" 
 button_font = pygame.font.SysFont(None, 30)
 button_text_color = WHITE
 
@@ -59,22 +59,22 @@ def is_clicked(pos):
 
 
 def update_grid_fail(board, window, current_x, current_y):
-    window.fill(WHITE)  # Clear the window before drawing the grid
+    window.fill(WHITE) 
 
-    cell_size = WIDTH // 9  # Calculate cell size based on window dimensions
+    cell_size = WIDTH // 9  
 
     for i in range(9):
         for j in range(9):
             cell_x, cell_y = j * cell_size, i * cell_size
             pygame.draw.rect(window, GRAY, (cell_x, cell_y, cell_size, cell_size), 1)
 
-            # Highlight the currently updated cell with red borders
+          
             if i == current_x and j == current_y:
                 pygame.draw.rect(window, RED, (cell_x, cell_y, cell_size, cell_size), 3)
 
-            # Display numbers in non-empty cells
+         
             if board[i][j] != -1:
-                font = pygame.font.Font(None, 36)  # Define font for numbers
+                font = pygame.font.Font(None, 36) 
                 text_surface = font.render(str(board[i][j]), True, BLACK)
                 text_rect = text_surface.get_rect(center=(cell_x + cell_size // 2, cell_y + cell_size // 2))
                 window.blit(text_surface, text_rect)
@@ -83,22 +83,22 @@ def update_grid_fail(board, window, current_x, current_y):
 
 
 def update_grid_pass(board, window, current_x, current_y):
-    window.fill(WHITE)  # Clear the window before drawing the grid
+    window.fill(WHITE) 
 
-    cell_size = WIDTH // 9  # Calculate cell size based on window dimensions
+    cell_size = WIDTH // 9 
 
     for i in range(9):
         for j in range(9):
             cell_x, cell_y = j * cell_size, i * cell_size
             pygame.draw.rect(window, GRAY, (cell_x, cell_y, cell_size, cell_size), 1)
 
-            # Highlight the currently updated cell with red borders
+          
             if i == current_x and j == current_y:
                 pygame.draw.rect(window, GREEN, (cell_x, cell_y, cell_size, cell_size), 3)
 
-            # Display numbers in non-empty cells
+           
             if board[i][j] != -1:
-                font = pygame.font.Font(None, 36)  # Define font for numbers
+                font = pygame.font.Font(None, 36) 
                 text_surface = font.render(str(board[i][j]), True, BLACK)
                 text_rect = text_surface.get_rect(center=(cell_x + cell_size // 2, cell_y + cell_size // 2))
                 window.blit(text_surface, text_rect)
@@ -107,11 +107,11 @@ def update_grid_pass(board, window, current_x, current_y):
 
 def draw_grid(grid):
     cell_size = WIDTH // 9
-    font = pygame.font.SysFont(None, 40)  # Define a font for displaying numbers
+    font = pygame.font.SysFont(None, 40) 
 
     for i in range(9):
         for j in range(9):
-            if grid[i][j] != -1:  # Only render non-empty cells
+            if grid[i][j] != -1: 
                 text = font.render(str(grid[i][j]), True, BLACK)
                 text_rect = text.get_rect()
                 text_rect.center = (j * cell_size + cell_size // 2, i * cell_size + cell_size // 2)
@@ -174,36 +174,36 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            #mouse_pos = pygame.mouse.get_pos()
-            if is_clicked(mouse_pos):  # Check if the mouse click is within the button area
-                # Perform the function (e.g., clear the grid)
+           
+            if is_clicked(mouse_pos): 
+              
                 sudoku_solver(grid,WINDOW)
         
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:  # Move to the next cell on pressing "Enter"
-                selected_cell = (selected_cell[0], (selected_cell[1] + 1) % 9)  # Move to the next column
-                if selected_cell[1] == 0:  # Move to the next row when reaching the end of the row
+            if event.key == pygame.K_RETURN: 
+                selected_cell = (selected_cell[0], (selected_cell[1] + 1) % 9) 
+                if selected_cell[1] == 0: 
                     selected_cell = ((selected_cell[0] + 1) % 9, 0)
-            elif event.key == pygame.K_BACKSPACE:  # Move to the previous cell on pressing "Backspace"
-                selected_cell = (selected_cell[0], (selected_cell[1] - 1) % 9)  # Move to the previous column
-                if selected_cell[1] == 8:  # Move to the previous row when reaching the beginning of the row
+            elif event.key == pygame.K_BACKSPACE: 
+                selected_cell = (selected_cell[0], (selected_cell[1] - 1) % 9) 
+                if selected_cell[1] == 8: 
                     selected_cell = ((selected_cell[0] - 1) % 9, 8)
             else:
                 number = get_number_input(event)
                 if number is not None:
                     row, col = selected_cell
-                    grid[row][col] = number  # Update the grid with the entered number
+                    grid[row][col] = number 
 
-    # Rendering the grid
+  
 
-    # Display the mouse coordinates in the console
+  
 
-    # Draw a red circle at the mouse position
+  
     pygame.draw.circle(WINDOW, RED, mouse_pos, 10)
     WINDOW.fill(WHITE)
     draw_grid(grid)
     draw_button() 
-    # Highlighting the selected cell (optional)
+  
     cell_size = WIDTH // 9
     row, col = selected_cell
     pygame.draw.rect(WINDOW, RED, (col * cell_size, row * cell_size, cell_size, cell_size), 3)
