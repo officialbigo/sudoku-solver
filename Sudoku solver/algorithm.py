@@ -215,9 +215,3 @@ sys.exit()
 
 
     
-
-# solver_instance=Solution_class()
-# if solver_instance.sudoku_solver(sudoku_board):
-#     print(sudoku_board)
-# else:
-#     print("not possible")
